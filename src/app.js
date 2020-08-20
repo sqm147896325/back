@@ -13,7 +13,9 @@ export default class extends React.Component {
     return (
       <div>
         <BrowserRouter>
-          <Link to='/login'>login</Link>&nbsp;
+          <Button>
+            <Link to='/login'>login</Link>&nbsp;
+          </Button>
           <Link to='/admin'>admin</Link>&nbsp;
           <Switch>
             {/* 注意switch使用的地方,它只会是一个标签生效 */}
