@@ -11,6 +11,7 @@ export default class Login extends Component {
   }
 
   handleSubmit = event => {
+    // 监听提交
     if (
       this.state.usernameCheck === true &&
       this.state.passwordCheck === true
@@ -27,28 +28,33 @@ export default class Login extends Component {
   }
 
   handleChange = event => {
+    // 监听输入框的变化
     var pattern = /^[-_a-zA-Z0-9]{4,16}$/
     if (event.target.type === 'text') {
       if (pattern.test(event.target.value)) {
+        // 验证正确执行
         this.setState({
           usernameCheck: true
         })
+        event.target.nextElementSibling.style.visibility = 'hidden'
       } else {
+        // 验证错误执行
         this.setState({
           usernameCheck: false
         })
-        console.log('用户名不匹配')
+        event.target.nextElementSibling.style.visibility = 'visible'
       }
     } else if (event.target.type === 'password') {
       if (pattern.test(event.target.value)) {
         this.setState({
           passwordCheck: true
         })
+        event.target.nextElementSibling.style.visibility = 'hidden'
       } else {
         this.setState({
           passwordCheck: false
         })
-        console.log('密码不匹配')
+        event.target.nextElementSibling.style.visibility = 'visible'
       }
     } else {
       console.log('err')
@@ -62,20 +68,26 @@ export default class Login extends Component {
           <div>登录界面</div>
         </nav>
         <main>
-          <form onSubmit={this.handleSubmit}>
-            <div>用户登录</div>
+          <form onSubmit={this.handleSubmit} autocomplete="off">
+            <div className='title'>用户登录</div>
             <input
               type='text'
               name='username'
               placeholder='请输入用户名'
               onChange={this.handleChange}
             />
+            <div className='tips' style={{ visibility: 'hidden' }}>
+              4到16位,字母数字下划线，减号
+            </div>
             <input
               type='password'
               name='password'
               placeholder='请输入密码'
               onChange={this.handleChange}
             />
+            <div className='tips' style={{ visibility: 'hidden' }}>
+              4到16位,字母数字下划线，减号
+            </div>
             <button>登录</button>
           </form>
         </main>
