@@ -1,0 +1,10 @@
+.Layout {
+  height: 100%;
+}
+.Layout .left-nav {
+  color: #fff;
+}
+.Layout footer {
+  height: 30px;
+  text-align: center;
+}

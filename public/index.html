@@ -8,11 +8,20 @@
   <meta name="description" content="Web site created using create-react-app" />
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
   <link rel="stylesheet" href="/css/normalize.css">
+  <!-- 要使用 / 而不使用 ./ 表示相对路径
+  因为 / 会在以你导入的文件为基准寻找
+  而 ./ 会出现文件无法导入的问题(具体原因没有深究，大概是在proxy或router跳转后会以跳转的文件为基准找)
+  -->
   <!-- <link rel="stylesheet" href="/css/bootstrap.min.css"> -->
   <!-- <script src="./js/flexible.js"></script>
   <script src="./js/flexible_css.js"></script> -->
   <!-- flexible 不建议使用 -->
   <title>React App</title>
+  <style>
+    #root{
+      height: 100%;
+    }
+  </style>
 </head>
 
 <body>

@@ -11,16 +11,14 @@ import Admin from './pages/admin/admin.jsx'
 export default class extends React.Component {
   render () {
     return (
-      <div>
         <BrowserRouter>
           <Switch>
             {/* 注意switch使用的地方,它只会是一个标签生效 */}
             <Route path='/login' component={Login}></Route>
             {/* 注意path的格式一定要是 /路径 这样 */}
-            <Route path='/admin' component={Admin}></Route>
+            <Route path='/' component={Admin}></Route>
           </Switch>
         </BrowserRouter>
-      </div>
     )
   }
 }

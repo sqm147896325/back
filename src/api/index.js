@@ -3,8 +3,11 @@
 
 // 在json文件中定义proxy以解决端口不匹配的问题
 
-import ajax from "./ajax";
+import ajax from './ajax'
+
+const BASE = ""
 
 // 分别暴露(多个export)与整体暴露(一个export)都可，下面使用分别暴露,调用时一般解构即写大括号
-export const reqLogin = (username,password) => ajax('./login', {username,password}, 'post')
+export const reqLogin = (username, password) => ajax(BASE + '/login', { username, password }, 'post')
 // 箭头函数不写大括号自动return
+export const reqAddUser = (user) => ajax(BASE + '/manage/user/add', user, 'post')
