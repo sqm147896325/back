@@ -19,7 +19,7 @@ export default class LeftNav extends Component {
     return (
       <div className='left-nav'>
         <header className='left-nav-header'>
-          <h2>管理后台</h2>
+          <h1>管理后台</h1>
         </header>
         <div>
         {/* 这里是直接配置的，推荐使用config.js将菜单存入数组，并导入该文件进行动态渲染
@@ -35,46 +35,47 @@ export default class LeftNav extends Component {
             // inlineCollapsed={this.state.collapsed}
             // 结合state控制收缩这里不使用
           >
-            <Menu.Item key='1' icon={<PieChartOutlined />}>
-              <Link to='./home'>
+          {/* 路由 to的路径不要加 . 否则会在原有的基础上跳转 */}
+            <Menu.Item key='1' icon={<PieChartOutlined />} >
+              <Link to='/home'>
                 <span>首页</span>
               </Link>
             </Menu.Item>
             <SubMenu key='sub1' icon={<MailOutlined />} title='商品'>
               <Menu.Item key='2'>
-                <Link to='./category'>
+                <Link to='/category'>
                   <span>品类管理</span>
                 </Link>
               </Menu.Item>
               <Menu.Item key='3'>
-                <Link to='./product'>
+                <Link to='/product'>
                   <span>商品管理</span>
                 </Link>
               </Menu.Item>
             </SubMenu>
             <Menu.Item key='4' icon={<DesktopOutlined />}>
-              <Link to='./user'>
+              <Link to='/user'>
                 <span>用户管理</span>
               </Link>
             </Menu.Item>
             <Menu.Item key='5' icon={<ContainerOutlined />}>
-              <Link to='./role'>
+              <Link to='/role'>
                 <span>角色管理</span>
               </Link>
             </Menu.Item>
             <SubMenu key='sub2' icon={<AppstoreOutlined />} title='图形图表'>
               <Menu.Item key='6'>
-                <Link to='./charts/bar'>
+                <Link to='/charts/bar'>
                   <span>柱形图</span>
                 </Link>
               </Menu.Item>
               <Menu.Item key='7'>
-                <Link to='./charts/line'>
+                <Link to='/charts/line'>
                   <span>折线图</span>
                 </Link>
               </Menu.Item>
               <Menu.Item key='8'>
-                <Link to='./charts/pie'>
+                <Link to='/charts/pie'>
                   <span>饼形图</span>
                 </Link>
               </Menu.Item>
