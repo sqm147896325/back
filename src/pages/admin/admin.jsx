@@ -21,7 +21,7 @@ export default class Login extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      nowroute: ''
+      nowroute: this.props.history.location
     }
     this.props.history.listen(route => {
       this.setState({
@@ -29,6 +29,13 @@ export default class Login extends Component {
       })
     })
   }
+
+  componentDidMount () {
+    this.setState({
+      nowroute: this.props.history.location
+    })
+  }
+  
 
   render () {
     const user = memoryUtils.user
@@ -53,7 +60,7 @@ export default class Login extends Component {
           </Header>
           <Content style={{ margin: '20px', backgroundColor: '#fff' }}>
             <Switch>
-              <Route path='/home'  component={Home}></Route>
+              <Route path='/home' component={Home}></Route>
               <Route path='/category' component={Category}></Route>
               <Route path='/product' component={Product}></Route>
               <Route path='/role' component={Role}></Route>

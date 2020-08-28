@@ -20,7 +20,7 @@ export default class MyHeader extends Component {
     })
     // 获取本地存储中的登录信息
     this.dateInterval = setInterval(() => {
-      this.setState({ date: dateUtils.getdate(),nowroute: this.props.nowroute.pathname})
+      this.setState({ date: dateUtils.getdate()})
     }, 1000)
     // 时间定时器
   }
@@ -35,7 +35,7 @@ export default class MyHeader extends Component {
   }
 
   handleOk = e => {
-    console.log(e)
+    // console.log(e)   确定退出
     this.setState({
       visible: false
     })
@@ -55,7 +55,7 @@ export default class MyHeader extends Component {
         <div className='header-top'>
           <span>欢迎,{this.state.user}</span> &nbsp;
           <a href='javascirpt:'>
-            <Button type='primary' onClick={this.showModal} size='small'>
+            <Button type='primary' danger onClick={this.showModal} size='small'>
               退出
             </Button>
             <Modal
@@ -69,7 +69,7 @@ export default class MyHeader extends Component {
           </a>
         </div>
         <div className='header-bottom'>
-          <div className='header-bottom-left'>{this.state.nowroute}</div>
+          <div className='header-bottom-left'>{this.props.nowroute.pathname}</div>
           <div className='header-bottom-right'>
             <span>{this.state.date}</span>
             {/* 时间这种动态渲染的应该单独拎出来作为一个组件，避免渲染次数过高导致效率过低 */}

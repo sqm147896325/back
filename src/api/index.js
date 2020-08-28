@@ -5,9 +5,21 @@
 
 import ajax from './ajax'
 
-const BASE = ""
+const BASE = ''
 
 // 分别暴露(多个export)与整体暴露(一个export)都可，下面使用分别暴露,调用时一般解构即写大括号
-export const reqLogin = (username, password) => ajax(BASE + '/login', { username, password }, 'post')
+export const reqLogin = (username, password) =>
+  ajax(BASE + '/login', { username, password }, 'post')
 // 箭头函数不写大括号自动return
-export const reqAddUser = (user) => ajax(BASE + '/manage/user/add', user, 'post')
+export const reqAddUser = user => ajax(BASE + '/manage/user/add', user, 'post')
+
+//获取一级/二级分类的列表
+export const reqCategorys = parentId =>
+  ajax(BASE + '/manage/category/list', { parentId })
+// 不指定类型使用形参默认值，这里为get
+
+export const reqAddCategory = (categoryName, parentId) =>
+  ajax(BASE + '/manage/category/add', { categoryName, parentId }, 'post')
+
+export const reqUpdateCategory = (categoryName, categoryId) =>
+  ajax(BASE + '/manage/category/update', { categoryName, categoryId }, 'post')
