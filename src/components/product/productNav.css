@@ -1,0 +1,20 @@
+.product-nav {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 10px;
+}
+.product-nav .form {
+  display: flex;
+}
+.product-nav .form [class*=my] {
+  margin: 10px;
+}
+.product-nav .form .myselect {
+  width: 135px;
+}
+.product-nav .form .myinput {
+  width: 180px;
+}
+.product-nav .right-button {
+  margin: 10px;
+}
