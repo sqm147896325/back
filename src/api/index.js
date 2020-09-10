@@ -23,3 +23,32 @@ export const reqAddCategory = (categoryName, parentId) =>
 
 export const reqUpdateCategory = (categoryName, categoryId) =>
   ajax(BASE + '/manage/category/update', { categoryName, categoryId }, 'post')
+
+export const reqProduces = (pageNum, pageSize) =>
+  ajax(BASE + '/manage/product/list', { pageNum, pageSize })
+
+export const reqAddProduces = async AddProduces => {
+  /*
+AddProduces包括
+{categoryId,
+pCategoryId,
+name,
+price,
+desc,
+status,
+imgs,
+detail}
+*/
+  let params = {
+    categoryId:0,
+    pCategoryId:AddProduces[3],
+    name:AddProduces[0],
+    price:AddProduces[2],
+    desc:AddProduces[1],
+    status:1,
+    imgs:AddProduces[4],
+    detail:AddProduces[5]
+  }
+  let demo = await ajax(BASE + '/manage/product/add', params, 'post')
+  console.log(demo)
+}

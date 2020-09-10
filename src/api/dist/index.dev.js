@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.reqUpdateCategory = exports.reqAddCategory = exports.reqCategorys = exports.reqAddUser = exports.reqLogin = void 0;
+exports.reqProduces = exports.reqUpdateCategory = exports.reqAddCategory = exports.reqCategorys = exports.reqAddUser = exports.reqLogin = void 0;
 
 var _ajax = _interopRequireDefault(require("./ajax"));
 
@@ -57,3 +57,11 @@ var reqUpdateCategory = function reqUpdateCategory(categoryName, categoryId) {
 };
 
 exports.reqUpdateCategory = reqUpdateCategory;
+
+var reqProduces = function reqProduces(parentId) {
+  return (0, _ajax["default"])(BASE + '/manage/product/list', {
+    parentId: parentId
+  });
+};
+
+exports.reqProduces = reqProduces;

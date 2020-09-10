@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Redirect, Switch, Route } from 'react-router-dom'
 import memoryUtils from '../../utils/memoryUtils'
-import { Layout } from 'antd'
+import { Layout  } from 'antd'
 import LeftNav from '../../components/left-nav/LeftNav'
 import MyHeader from '../../components/my-header/MyHeader'
 import './admin.css'
@@ -15,7 +15,7 @@ import Bar from '../charts/bar'
 import Line from '../charts/line'
 import Pie from '../charts/pie'
 
-const { Header, Sider, Content } = Layout
+const { Header, Sider, Content , Footer } = Layout
 
 export default class Login extends Component {
   constructor (props) {
@@ -58,7 +58,7 @@ export default class Login extends Component {
           >
             <MyHeader nowroute={this.state.nowroute}></MyHeader>
           </Header>
-          <Content style={{ margin: '20px', backgroundColor: '#fff' }}>
+          <Content style={{ margin: '20px', backgroundColor: '#fff'}} className='content'>
             <Switch>
               <Route path='/home' component={Home}></Route>
               <Route path='/category' component={Category}></Route>
@@ -71,7 +71,7 @@ export default class Login extends Component {
               <Redirect to='/home'></Redirect>
             </Switch>
           </Content>
-          <footer>底部</footer>
+          <Footer style={{height:'40px',padding:'2px'}}>底部</Footer>
         </Layout>
       </Layout>
     )

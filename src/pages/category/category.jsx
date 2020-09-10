@@ -55,11 +55,7 @@ export default class Category extends Component {
     )
   }
 
-  showCategorys () {
-    this.setState({ parentId: '0', parentName: '', subCategorys: [] }, () => {
-      this.getCategorys()
-    })
-  }
+
 
   showAddModal = () => {
     this.setState({
