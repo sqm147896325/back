@@ -39,16 +39,13 @@ status,
 imgs,
 detail}
 */
-  let params = {
-    categoryId:0,
-    pCategoryId:AddProduces[3],
-    name:AddProduces[0],
-    price:AddProduces[2],
-    desc:AddProduces[1],
-    status:1,
-    imgs:AddProduces[4],
-    detail:AddProduces[5]
-  }
-  let demo = await ajax(BASE + '/manage/product/add', params, 'post')
+AddProduces.status = 0
+// 0代表未上架
+console.log(AddProduces)
+  let demo = await ajax(BASE + '/manage/product/add', AddProduces, 'post')
   console.log(demo)
 }
+
+
+export const reqUpdateState = (reqUpdateState) =>
+  ajax(BASE + '/manage/product/updateStatus', reqUpdateState, 'post')

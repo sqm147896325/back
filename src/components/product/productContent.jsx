@@ -1,15 +1,7 @@
 import React, { Component, useState } from 'react'
-import {
-  Form,
-  Button,
-  Input,
-  Select,
-  Card,
-  Table,
-  InputNumber,
-} from 'antd'
+import { Form, Button, Input, Select, Card, Table, InputNumber } from 'antd'
 import './productContent.css'
-import { reqProduces } from '../../api/index'
+import { reqProduces, reqUpdateState } from '../../api/index'
 
 export default class ProductContent extends Component {
   constructor (props) {
@@ -21,7 +13,7 @@ export default class ProductContent extends Component {
   }
 
   async componentWillMount () {
-    let req = await reqProduces(1, 5)
+    let req = await reqProduces(1, 2 ^ (63 - 1))
     this.setState({
       productlist: req.data.data.list
     })
@@ -32,13 +24,50 @@ export default class ProductContent extends Component {
         name: i.name,
         describe: i.detail,
         price: i.price,
-        state: i.status
+        stateAndproductId: {
+          state: i.status === 0 ? '下架' : '上架',
+          productId: i._id
+        }
       })
     })
 
     this.setState({
       listdata: listdata
     })
+  }
+
+  upList = async () => {
+    let req = await reqProduces(1, 2 ^ (63 - 1))
+    this.setState({
+      productlist: req.data.data.list
+    })
+
+    let listdata = []
+    this.state.productlist.forEach(i => {
+      listdata.push({
+        name: i.name,
+        describe: i.detail,
+        price: i.price,
+        stateAndproductId: {
+          state: i.status === 0 ? '下架' : '上架',
+          productId: i._id
+        }
+      })
+    })
+
+    this.setState({
+      listdata: listdata
+    })
+  }
+
+  changedata = async (click, e) => {
+    if (click.target.innerHTML === '上 架') {
+      await reqUpdateState({ productId: e.productId, status: 1 })
+      this.upList()
+    } else {
+      await reqUpdateState({ productId: e.productId, status: 0 })
+      this.upList()
+    }
   }
 
   render () {
@@ -107,9 +136,26 @@ export default class ProductContent extends Component {
         },
         {
           title: '状态',
-          dataIndex: 'state',
+          dataIndex: 'stateAndproductId',
+          Key: 'state',
           width: '10%',
-          editable: true
+          editable: true,
+          render: e => {
+            return (
+              <div>
+                <div style={{ textAlign: 'center', marginBottom: '5px' }}>
+                  {e.state === '上架' ? '已上架' : '已下架'}
+                </div>
+                <Button
+                  size='small'
+                  type={e.state === '上架' ? '' : 'primary'}
+                  onClick={click => this.changedata(click, e)}
+                >
+                  {e.state === '上架' ? '下架' : '上架'}
+                </Button>
+              </div>
+            )
+          }
         },
         {
           title: '操作',
@@ -117,8 +163,12 @@ export default class ProductContent extends Component {
           render: () => {
             return (
               <div>
-                <Button type='link' size='small'>详情</Button>
-                <Button type='link' size='small'>修改</Button>
+                <Button type='link' size='small'>
+                  详情
+                </Button>
+                <Button type='link' size='small'>
+                  修改
+                </Button>
               </div>
             )
           }

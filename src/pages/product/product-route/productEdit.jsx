@@ -1,103 +1,114 @@
 import React, { Component } from 'react'
-import { PageHeader, Card, Input, Button, InputNumber, Form } from 'antd'
-import { reqAddProduces } from '../../../api/index.js'
+import { PageHeader, Input, Button, InputNumber, Form, Select } from 'antd'
+import { reqAddProduces, reqCategorys } from '../../../api/index.js'
 import PicturesWall from '../../../components/pictures/pictures.jsx'
+import ProductEditSelect from '../../../components/product/productEditSelect.jsx'
 
 const { TextArea } = Input
 
 export default class ProductEdit extends Component {
-  setDetail = e => {
-    let detailEdit = document.querySelectorAll('.detailEdit')
-    let editArr = []
-    detailEdit.forEach((e, i) => {
-      editArr.push(e.value)
-    })
-    reqAddProduces(editArr)
+  constructor (props) {
+    super(props)
+    this.state = {
+
+    }
+  }
+
+  onSubmit = values => {
+    let firstele = window.twochange
+    let secondele = window.onechange
+    values.product.categoryId = firstele || 0
+    values.product.pCategoryId = secondele || 0
+    console.log(values.product)
+    reqAddProduces(values.product)
   }
 
   render () {
-    let listname = ['名称', '描述', '价格', '分类', '图片', '详情']
     let Detaillist = () => {
-      return listname.map((element, index) => {
-        if (index === 2) {
-          return (
-            <Card>
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                <h3 style={{ fontWeight: 'bold', padding: '0 20px' }}>
-                  {element}
-                </h3>
-                &nbsp; &nbsp;
-                <h4 style={{ color: '#666' }}>
-                  <Form>
-                    <Form.Item
-                      name={['product', 'Price']}
-                      rules={[
-                        {
-                          type: 'number',
-                          min: 0,
-                          max: 99
-                        }
-                      ]}
-                    >
-                      <InputNumber />
-                    </Form.Item>
-                  </Form>
-                </h4>
-              </div>
-            </Card>
-          )
-        }
-        if (index === 4) {
-          return (
-            <Card>
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                <h3 style={{ fontWeight: 'bold', padding: '0 20px' }}>
-                  {element}
-                </h3>
-                &nbsp; &nbsp;
-                <h4 style={{ color: '#666' }}>
-                  <PicturesWall></PicturesWall>
-                </h4>
-              </div>
-            </Card>
-          )
-        }
-        if (index === 5) {
-          return (
-            <Card>
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                <h3 style={{ fontWeight: 'bold', padding: '0 20px' }}>
-                  {element}
-                </h3>
-                &nbsp; &nbsp;
-                <h4 style={{ color: '#666' }}>
-                  <TextArea
-                    className='detailEdit'
-                    rows={4}
-                    style={{ width: '460px' }}
-                  ></TextArea>
-                </h4>
-              </div>
-            </Card>
-          )
-        }
-        return (
-          <Card>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <h3 style={{ fontWeight: 'bold', padding: '0 20px' }}>
-                {element}
-              </h3>
-              &nbsp; &nbsp;
-              <h4 style={{ color: '#666' }}>
-                <Input
-                  className='detailEdit'
-                  style={{ width: '460px' }}
-                ></Input>
-              </h4>
-            </div>
-          </Card>
-        )
-      })
+      return (
+        <Form id='jx' onFinish={this.onSubmit}>
+          <div style={{ height: '50px', margin: '0 30px' }}>
+            <Form.Item
+              name={['product', 'name']}
+              label='名称'
+              rules={[{ required: true, type: 'string' }]}
+              style={{ margin: '0' }}
+            >
+              <Input style={{ width: '240px' }} className='detailEdit'></Input>
+            </Form.Item>
+          </div>
+          <div style={{ height: '50px', margin: '0 30px' }}>
+            <Form.Item
+              name={['product', 'desc']}
+              label='描述'
+              rules={[{ required: true, type: 'string' }]}
+              style={{ margin: '0' }}
+            >
+              <Input style={{ width: '240px' }} className='detailEdit'></Input>
+            </Form.Item>
+          </div>
+          <div style={{ height: '50px', margin: '0 30px' }}>
+            <Form.Item
+              name={['product', 'price']}
+              label='价格'
+              rules={[{ required: true, type: 'number', min: 0, max: 99999 }]}
+              style={{ margin: '0' }}
+            >
+              <InputNumber style={{ width: '240px' }} className='detailEdit' />
+            </Form.Item>
+          </div>
+          <div style={{ height: '50px', margin: '0 30px' }}>
+            <Form.Item
+              name={['product', 'categoryId']}
+              label='分类'
+              rules={[{ required: false, type: 'string' }]}
+              style={{ margin: '0' }}
+            >
+            <ProductEditSelect></ProductEditSelect>
+            </Form.Item>
+          </div>
+          <div style={{ margin: '0 30px' }}>
+            <Form.Item
+              name={['product', 'imgs']}
+              label='图片'
+              rules={[{ required: false, type: 'any', min: 0, max: 99999 }]}
+              style={{ margin: '0' }}
+            >
+              <PicturesWall className='detailEdit'></PicturesWall>
+            </Form.Item>
+          </div>
+
+          <div style={{ margin: '0 30px' }}>
+            <Form.Item
+              name={['product', 'detail']}
+              label='详情'
+              rules={[{ required: false, type: 'string', min: 0, max: 99999 }]}
+              style={{ margin: '0' }}
+            >
+              <TextArea
+                className='detailEdit'
+                rows={4}
+                style={{ width: '460px' }}
+              ></TextArea>
+            </Form.Item>
+          </div>
+          <div
+            className='option'
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              margin: '20px'
+            }}
+          >
+            <Form.Item>
+              <Button type='primary' htmlType='submit'>
+                添加
+              </Button>
+            </Form.Item>
+          </div>
+        </Form>
+      )
     }
 
     return (
@@ -109,19 +120,6 @@ export default class ProductEdit extends Component {
           subTitle='详情页'
         ></PageHeader>
         <Detaillist></Detaillist>
-        <div
-          className='option'
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            margin: '20px'
-          }}
-        >
-          <Button type='primary' onClick={this.setDetail}>
-            添加
-          </Button>
-        </div>
       </div>
     )
   }

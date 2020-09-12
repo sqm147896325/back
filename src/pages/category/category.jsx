@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import { Card, Button, Table, message, Modal } from 'antd'
-import { reqCategorys, reqAddCategory , reqUpdateCategory } from '../../api/index'
+import {
+  reqCategorys,
+  reqAddCategory,
+  reqUpdateCategory
+} from '../../api/index'
 import './category.css'
 
 //
@@ -12,7 +16,7 @@ export default class Category extends Component {
     parentId: '0',
     parentName: '',
     showStatus: 0, // 0 都不显示 1 显示添加 2 显示更新
-    upid:'0'
+    upid: '0'
   }
 
   //   初始化Table的分类
@@ -29,7 +33,9 @@ export default class Category extends Component {
         render: category => (
           // render回调传参，传入的是它本身
           <span>
-            <Button onClick={this.showUpdateModal} value={category._id}>修改分类</Button>
+            <Button onClick={this.showUpdateModal} value={category._id}>
+              修改分类
+            </Button>
             {/*如何向事件回调函数传递参数: 先定义一个匿名函数, 在函数调用处理的函数并传入数据*/}
             {this.state.parentId === '0' ? (
               <Button onClick={() => this.showSubCategorys(category)}>
@@ -55,20 +61,21 @@ export default class Category extends Component {
     )
   }
 
-
-
   showAddModal = () => {
     this.setState({
       showStatus: 1
     })
   }
 
-  showUpdateModal = (e) => {
-    
+  showUpdateModal = e => {
     this.setState({
       showStatus: 2,
-      upid : e.target.parentElement.value
+      upid: e.target.parentElement.value
     })
+  }
+
+  showCategorys = () => {
+    window.location.reload()
   }
 
   addHandleOk = e => {
@@ -83,7 +90,7 @@ export default class Category extends Component {
 
   updateHandleOk = e => {
     let update = document.getElementsByClassName('form-update')[0].value
-    reqUpdateCategory(update,this.state.upid)
+    reqUpdateCategory(update, this.state.upid)
     this.setState({
       showStatus: 0
     })
