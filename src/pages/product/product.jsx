@@ -2,7 +2,8 @@ import React , { Component } from 'react'
 import { Route , Switch ,Redirect } from 'react-router-dom'
 import productList from './product-route/productList'
 import productEdit from './product-route/productEdit'
-import productMsg from './product-route/productMsg'
+import ProductDetails from './product-route/ProductDetails'
+import ProductUpdata from './product-route/ProductUpdata'
 
 // 
 export default class Product extends Component{
@@ -13,7 +14,8 @@ export default class Product extends Component{
                 <Route path="/product" component={productList} exact></Route>
                 {/* 子路由与父路由并用不要忘记 exact 精确匹配 */}
                 <Route path="/product/edit" component={productEdit}></Route>
-                <Route path="/product/msg" component={productMsg}></Route>
+                <Route path="/product/details" component={ProductDetails}></Route>
+                <Route path="/product/updata" component={ProductUpdata}></Route>
                 </Switch>
             </div>
         )

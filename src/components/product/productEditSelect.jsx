@@ -7,11 +7,9 @@ export default class ProductEditSelect extends Component {
     super(props)
     this.state = {
       change: true,
-      children: '',
-      defaultValue: ''
+      children: ''
     }
   }
-
 
   componentWillMount = async () => {
     let categoryiList = await reqCategorys(0)
@@ -22,6 +20,21 @@ export default class ProductEditSelect extends Component {
     this.setState({
       options
     })
+    if (typeof window.nowProduct !== 'undefined') {
+      let categoryiList = await reqCategorys(window.nowProduct.pCategoryId)
+      let List = categoryiList.data.data
+      List = List.map(e => {
+        return { label: e.name, value: e._id }
+      })
+      this.setState({
+        children: List,
+        change: false,
+      })
+      this.setState({
+        defaultValue: { value: window.nowProduct.pCategoryId },
+        scddefaultValue: { value: window.nowProduct.categoryId }
+      })
+    }
   }
 
   changeSelect = async e => {
@@ -30,7 +43,6 @@ export default class ProductEditSelect extends Component {
     if (categoryiList.data.data.length !== 0) {
       let List = categoryiList.data.data
       List = List.map(e => {
-        console.log(e._id)
         return { label: e.name, value: e._id }
       })
       this.setState({
@@ -42,13 +54,20 @@ export default class ProductEditSelect extends Component {
       this.setState({
         children: '',
         change: true,
-        defaultValue: e.label
+        defaultValue: { label: e.label, value: e.value }
       })
     }
   }
 
-  changeSeleChildren = async e =>{
-    window.twochange = e.key
+  changeSeleChildren = async e => {
+    if (typeof window.nowProduct === 'undefined') {
+      window.twochange = e.key
+    } else {
+      window.twochange = e.key
+      this.setState({
+        scddefaultValue: { label: e.label, value: e.key }
+      })
+    }
   }
 
   render () {
@@ -56,6 +75,7 @@ export default class ProductEditSelect extends Component {
       <div>
         <Select
           defaultValue={this.state.defaultValue}
+          value={this.state.defaultValue}
           options={this.state.options}
           onChange={this.changeSelect}
           style={{
@@ -69,7 +89,8 @@ export default class ProductEditSelect extends Component {
         ></Select>
         <Select
           options={this.state.children}
-          defaultValue=''
+          defaultValue={this.state.scddefaultValue}
+          value={this.state.scddefaultValue}
           onChange={this.changeSeleChildren}
           style={{
             width: '120px',

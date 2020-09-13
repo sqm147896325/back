@@ -27,6 +27,9 @@ export const reqUpdateCategory = (categoryName, categoryId) =>
 export const reqProduces = (pageNum, pageSize) =>
   ajax(BASE + '/manage/product/list', { pageNum, pageSize })
 
+export const reqSearch = reqSearch =>
+  ajax(BASE + '/manage/product/search', reqSearch)
+
 export const reqAddProduces = async AddProduces => {
   /*
 AddProduces包括
@@ -39,13 +42,15 @@ status,
 imgs,
 detail}
 */
-AddProduces.status = 0
-// 0代表未上架
-console.log(AddProduces)
+  AddProduces.status = 0
+  // 0代表未上架
+  console.log(AddProduces)
   let demo = await ajax(BASE + '/manage/product/add', AddProduces, 'post')
   console.log(demo)
 }
 
-
-export const reqUpdateState = (reqUpdateState) =>
+export const reqUpdateState = reqUpdateState =>
   ajax(BASE + '/manage/product/updateStatus', reqUpdateState, 'post')
+
+export const reqUpdate = reqUpdate =>
+  ajax(BASE + '/manage/product/update', reqUpdate, 'post')

@@ -1,4 +1,5 @@
 import React, { Component, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Form, Button, Input, Select, Card, Table, InputNumber } from 'antd'
 import './productContent.css'
 import { reqProduces, reqUpdateState } from '../../api/index'
@@ -21,8 +22,9 @@ export default class ProductContent extends Component {
     let listdata = []
     this.state.productlist.forEach(i => {
       listdata.push({
+        operation: i,
         name: i.name,
-        describe: i.detail,
+        describe: i.desc,
         price: i.price,
         stateAndproductId: {
           state: i.status === 0 ? '下架' : '上架',
@@ -36,17 +38,43 @@ export default class ProductContent extends Component {
     })
   }
 
+  componentWillReceiveProps () {
+    if (typeof this.props.searchUpdata !== 'undefined') {
+      this.setState({
+        productlist: this.props.searchUpdata.data.data.list
+      })
+
+      let listdata = []
+      this.state.productlist.forEach(i => {
+        listdata.push({
+          operation: i,
+          name: i.name,
+          describe: i.desc,
+          price: i.price,
+          stateAndproductId: {
+            state: i.status === 0 ? '下架' : '上架',
+            productId: i._id
+          }
+        })
+      })
+
+      this.setState({
+        listdata: listdata
+      })
+    }
+    console.log(this.props.searchUpdata)
+  }
+
   upList = async () => {
     let req = await reqProduces(1, 2 ^ (63 - 1))
     this.setState({
       productlist: req.data.data.list
     })
-
     let listdata = []
     this.state.productlist.forEach(i => {
       listdata.push({
         name: i.name,
-        describe: i.detail,
+        describe: i.desc,
         price: i.price,
         stateAndproductId: {
           state: i.status === 0 ? '下架' : '上架',
@@ -145,14 +173,15 @@ export default class ProductContent extends Component {
               <div>
                 <div style={{ textAlign: 'center', marginBottom: '5px' }}>
                   {e.state === '上架' ? '已上架' : '已下架'}
+                  <Button
+                    size='small'
+                    type={e.state === '上架' ? '' : 'primary'}
+                    onClick={click => this.changedata(click, e)}
+                    style={{}}
+                  >
+                    {e.state === '上架' ? '下架' : '上架'}
+                  </Button>
                 </div>
-                <Button
-                  size='small'
-                  type={e.state === '上架' ? '' : 'primary'}
-                  onClick={click => this.changedata(click, e)}
-                >
-                  {e.state === '上架' ? '下架' : '上架'}
-                </Button>
               </div>
             )
           }
@@ -160,15 +189,29 @@ export default class ProductContent extends Component {
         {
           title: '操作',
           dataIndex: 'operation',
-          render: () => {
+          render: e => {
             return (
               <div>
-                <Button type='link' size='small'>
-                  详情
-                </Button>
-                <Button type='link' size='small'>
-                  修改
-                </Button>
+                <Link
+                  onClick={() => {
+                    window.nowProduct = e
+                  }}
+                  to='/product/details'
+                >
+                  <Button type='link' size='small'>
+                    详情
+                  </Button>
+                </Link>
+                <Link
+                  to='/product/updata'
+                  onClick={() => {
+                    window.nowProduct = e
+                  }}
+                >
+                  <Button type='link' size='small'>
+                    修改
+                  </Button>
+                </Link>
               </div>
             )
           }

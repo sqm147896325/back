@@ -1,30 +1,64 @@
 import React, { Component } from 'react'
-import { PageHeader, Input, Button, InputNumber, Form } from 'antd'
-import { reqAddProduces } from '../../../api/index.js'
+import { PageHeader, Input, Button, InputNumber, Form, Select } from 'antd'
+import { reqUpdate } from '../../../api/index.js'
 import PicturesWall from '../../../components/pictures/pictures.jsx'
 import ProductEditSelect from '../../../components/product/productEditSelect.jsx'
 
+//这个是更新信息组件路由
+
 const { TextArea } = Input
 
-export default class ProductEdit extends Component {
+export default class ProductUpdata extends Component {
   constructor (props) {
     super(props)
     this.state = {
-
+      name: '',
+      desc: '',
+      price: '',
+      imgs: '',
+      detail: ''
     }
   }
 
-  onSubmit = values => {
-    let firstele = window.twochange
-    let secondele = window.onechange
-    values.product.categoryId = firstele || 0
-    values.product.pCategoryId = secondele || 0
-    reqAddProduces(values.product)
+  onSubmit = async values => {
+    let firstele
+    let secondele
+    if (typeof window.nowProduct !== 'undefined') {
+      if (typeof window.onechange !== 'undefined') {
+        firstele = window.onechange
+      } else {
+        firstele = window.nowProduct.pCategoryId
+      }
+      if (typeof window.onechange !== 'undefined') {
+        secondele = window.twochange
+      } else {
+        secondele = window.nowProduct.categoryId
+      }
+    } else {
+      firstele = window.onechange
+      secondele = window.twochange
+    }
+    values.product.categoryId = secondele || 0
+    values.product.pCategoryId = firstele || 0
+    values.product._id = window.nowProduct._id || 0
+    values.product.detail = document.querySelector('#textarea').value
+    await reqUpdate(values.product)
     window.location.href = window.location.origin + '/product'
   }
 
-  componentWillMount(){
-    window.nowProduct = undefined
+  componentWillMount () {
+    if (typeof window.nowProduct === 'undefined') {
+      window.location.href = window.location.origin + '/product'
+    } else {
+      this.setState({
+        name: window.nowProduct.name,
+        desc: window.nowProduct.desc,
+        price: window.nowProduct.price,
+        imgs: window.nowProduct.imgs,
+        detail: window.nowProduct.detail,
+        _id: window.nowProduct._id
+      })
+    }
   }
 
   render () {
@@ -35,30 +69,42 @@ export default class ProductEdit extends Component {
             <Form.Item
               name={['product', 'name']}
               label='名称'
-              rules={[{ required: true, type: 'string' }]}
+              rules={[{ type: 'string' }]}
               style={{ margin: '0' }}
             >
-              <Input style={{ width: '240px' }} className='detailEdit'></Input>
+              <Input
+                style={{ width: '240px' }}
+                className='detailEdit'
+                defaultValue={this.state.name}
+              ></Input>
             </Form.Item>
           </div>
           <div style={{ height: '50px', margin: '0 30px' }}>
             <Form.Item
               name={['product', 'desc']}
               label='描述'
-              rules={[{ required: true, type: 'string' }]}
+              rules={[{ type: 'string' }]}
               style={{ margin: '0' }}
             >
-              <Input style={{ width: '240px' }} className='detailEdit'></Input>
+              <Input
+                style={{ width: '240px' }}
+                className='detailEdit'
+                defaultValue={this.state.desc}
+              ></Input>
             </Form.Item>
           </div>
           <div style={{ height: '50px', margin: '0 30px' }}>
             <Form.Item
               name={['product', 'price']}
               label='价格'
-              rules={[{ required: true, type: 'number', min: 0, max: 99999 }]}
+              rules={[{ type: 'number', min: 0, max: 99999 }]}
               style={{ margin: '0' }}
             >
-              <InputNumber style={{ width: '240px' }} className='detailEdit' />
+              <InputNumber
+                style={{ width: '240px' }}
+                className='detailEdit'
+                defaultValue={this.state.price}
+              />
             </Form.Item>
           </div>
           <div style={{ height: '50px', margin: '0 30px' }}>
@@ -68,7 +114,7 @@ export default class ProductEdit extends Component {
               rules={[{ required: false, type: 'string' }]}
               style={{ margin: '0' }}
             >
-            <ProductEditSelect></ProductEditSelect>
+              <ProductEditSelect></ProductEditSelect>
             </Form.Item>
           </div>
           <div style={{ margin: '0 30px' }}>
@@ -83,18 +129,14 @@ export default class ProductEdit extends Component {
           </div>
 
           <div style={{ margin: '0 30px' }}>
-            <Form.Item
-              name={['product', 'detail']}
-              label='详情'
-              rules={[{ required: false, type: 'string', min: 0, max: 99999 }]}
-              style={{ margin: '0' }}
-            >
-              <TextArea
-                className='detailEdit'
-                rows={4}
-                style={{ width: '460px' }}
-              ></TextArea>
-            </Form.Item>
+            <span style={{ position: 'relative', top: '-90px' }}>详情 ：</span>
+            <Input.TextArea
+              className='detailEdit'
+              rows={4}
+              style={{ width: '460px' }}
+              defaultValue={this.state.detail}
+              id='textarea'
+            ></Input.TextArea>
           </div>
           <div
             className='option'
@@ -107,7 +149,7 @@ export default class ProductEdit extends Component {
           >
             <Form.Item>
               <Button type='primary' htmlType='submit'>
-                添加
+                更新
               </Button>
             </Form.Item>
           </div>
@@ -121,7 +163,7 @@ export default class ProductEdit extends Component {
           className='site-page-header'
           onBack={() => window.history.go(-1)}
           title='商品'
-          subTitle='添加页'
+          subTitle='详情页'
         ></PageHeader>
         <Detaillist></Detaillist>
       </div>
