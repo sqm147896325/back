@@ -72,7 +72,7 @@ export const addRole = addRole =>
 
 //{_id:5f5ed3ca361eb63f081b8db8,name:更新名, auth_name:授权者, menus:'/''/product'}
 export const addRolePower = addUserPower =>
-  ajax(BASE + '/manage/role/update', addRolePower, 'post')
+  ajax(BASE + '/manage/role/update', addUserPower, 'post')
 
 /* 用户api */
 

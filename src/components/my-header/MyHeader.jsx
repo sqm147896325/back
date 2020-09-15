@@ -10,13 +10,15 @@ export default class MyHeader extends Component {
     this.state = {
       date: dateUtils.getdate(),
       visible: false,
-      user: ''
+      username: ''
     }
   }
 
   componentWillMount () {
     this.setState({
       username: JSON.parse(localStorage.getItem('user_key')).username
+    },()=>{
+      window.username = this.state.username
     })
     // 获取本地存储中的登录信息
     this.dateInterval = setInterval(() => {
@@ -53,7 +55,7 @@ export default class MyHeader extends Component {
     return (
       <div className='my-header'>
         <div className='header-top'>
-          <span>欢迎,{this.state.user}</span> &nbsp;
+          <span>欢迎,{this.state.username}</span> &nbsp;
           <a href='javascirpt:'>
             <Button type='primary' danger onClick={this.showModal} size='small'>
               退出
