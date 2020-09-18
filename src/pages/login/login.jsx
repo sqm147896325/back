@@ -24,6 +24,7 @@ export default class Login extends Component {
       this.state.passwordCheck === true
     ) {
       let req = await reqLogin(event.target[0].value, event.target[1].value)
+      // req.data.data.role.menus = ['/']  menus存储权限,但是初始的admin没有设置权限
       let user = req.data.data
       try {
         message.success('登录成功:' + user.username)
