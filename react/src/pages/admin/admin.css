@@ -1,0 +1,9 @@
+.Layout {
+  height: 100%;
+}
+.Layout .left-nav {
+  color: #fff;
+}
+.Layout .content {
+  overflow-y: auto;
+}

@@ -1,0 +1,77 @@
+.login {
+    min-height: 500px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+    nav {
+        width: 100%;
+        background: #126879;
+        color: #eee;
+
+        div {
+            height: 70px;
+            font-size: 26px;
+            line-height: 70px;
+            padding-left: 100px;
+        }
+    }
+
+    main {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: inherit;
+        background-image: linear-gradient(45deg, rgb(82, 255, 134), rgb(78, 119, 255));
+
+        form {
+            display: flex;
+            flex-direction: column;
+            height: 400px;
+            width: 520px;
+            background-color: rgba(141, 141, 141, 0.6);
+            border-radius: 30px;
+            align-items: center;
+            transition: all 1s;
+
+            .title {
+                font-size: 26px;
+                margin-top: 30px;
+            }
+
+            .tips {
+                width: 70%;
+                font-size: 12px;
+                color: rgb(250, 0, 0);
+                margin: 6px 0 0 0;
+            }
+
+            input {
+                width: 70%;
+                margin-top: 50px;
+                height: 30px;
+                border-radius: 12px;
+                padding: 0 10px;
+            }
+
+            button {
+                margin-top: 30px;
+                width: 50%;
+                height: 30px;
+                border-radius: 10px;
+            }
+
+            @media screen and (max-width:600px) {
+                height: 300px;
+                width: 400px;
+                border-radius: 20px;
+
+                input {
+                    margin-top: 30px;
+                    height: 20px;
+                    border-radius: 8px;
+                }
+            }
+        }
+    }
+}
